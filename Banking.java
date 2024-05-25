@@ -7,7 +7,6 @@ public class Banking implements ActionListener {
   private JTextField inputField;
   private JLabel balanceLabel;
   
-
 public static Account currreAccount;
 
   public Banking() {
