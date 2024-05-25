@@ -1,19 +1,20 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class Account {
     protected String accountNumber;
     protected double balance;
-    protected List<String> transactions;
+    protected String accountHolder;
 
-    public Account(String accountNumber, double initialBalance) {
+    public Account(String accountNumber, String accountHolder, double initialBalance) {
         this.accountNumber = accountNumber;
+        this.accountHolder = accountHolder;
         this.balance = initialBalance;
-        this.transactions = new ArrayList<>();
     }
 
     public String getAccountNumber() {
         return accountNumber;
+    }
+
+    public String getAccountHolder() {
+        return accountHolder;
     }
 
     public double getBalance() {
@@ -23,35 +24,21 @@ public abstract class Account {
     public void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
-            transactions.add("Deposited: $" + amount);
-        } else {
-            System.out.println("Deposit amount must be positive.");
         }
     }
 
     public void withdraw(double amount) {
         if (amount > 0 && amount <= balance) {
             balance -= amount;
-            transactions.add("Withdrew: $" + amount);
-        } else {
-            System.out.println("Insufficient funds or invalid amount.");
         }
     }
 
     public void transfer(Account toAccount, double amount) {
         if (amount > 0 && amount <= balance) {
-            withdraw(amount);
-            deposit(amount);
-            transactions.add("Transferred: $" + amount + " to Account " + toAccount.getAccountNumber());
-        } else {
-            System.out.println("Insufficient funds or invalid amount.");
+            this.withdraw(amount);
+            toAccount.deposit(amount);
         }
     }
 
-    public void viewTransactions() {
-        System.out.println("Transactions for Account " + accountNumber + ":");
-        for (String transaction : transactions) {
-            System.out.println(transaction);
-        }
-    }
+    public abstract void applyInterest();
 }
