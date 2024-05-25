@@ -1,19 +1,14 @@
-package main.java;
-
-public class SavingAccount extends Person {
+public class SavingsAccount extends Account {
     private double interestRate;
-    public SavingAccount(String name, int newPin, double interestRate, double balance) {
-        super(name, newPin, balance);
+
+    public SavingsAccount(String accountNumber, double initialBalance, double interestRate) {
+        super(accountNumber, initialBalance);
         this.interestRate = interestRate;
     }
 
-
-    public void applyInterest(){
+    public void applyInterest() {
         double interest = balance * interestRate / 100;
         balance += interest;
         transactions.add("Interest Applied: $" + interest);
     }
-    
 }
-
-//

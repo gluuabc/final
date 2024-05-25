@@ -1,8 +1,8 @@
-public class LoanAccount extends Person {
+public class LoanAccount extends Account {
     private double apr;
 
-    public LoanAccount(String name, int newPin, double balance, double apr) {
-        super(name, newPin, balance);
+    public LoanAccount(String accountNumber, double initialBalance, double apr) {
+        super(accountNumber, initialBalance);
         this.apr = apr;
     }
 

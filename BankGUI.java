@@ -7,7 +7,7 @@ public class BankGUI extends JFrame {
     private JTextField accountNumberField;
     private JTextField amountField;
     private JTextArea transactionArea;
-    private Person currentAccount;
+    private Account currentAccount;
 
     public BankGUI() {
         setTitle("Bank Account Management System");
