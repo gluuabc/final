@@ -6,7 +6,9 @@ public class Banking implements ActionListener {
   private JFrame mainFrame;
   private JTextField inputField;
   private JLabel balanceLabel;
-  private double balance = 0.0;
+  
+
+public static Account currreAccount;
 
   public Banking() {
 
@@ -17,7 +19,7 @@ public class Banking implements ActionListener {
     mainFrame.setLayout(new FlowLayout());
 
     inputField = new JTextField(10);
-    balanceLabel = new JLabel("Current balance: " + balance);
+    balanceLabel = new JLabel("Current balance: " + currreAccount.getBalance());
     JButton depositButton = new JButton("Deposit");
     JButton withdrawButton = new JButton("Withdraw");
 
@@ -36,11 +38,11 @@ public class Banking implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     int amount = Integer.parseInt(inputField.getText());
     if (e.getActionCommand().equals("Deposit")) {
-      balance += amount;
+      currreAccount.deposit(amount);
     } else {
-      balance -= amount;
+      currreAccount.withdraw(amount);
     }
-    balanceLabel.setText("Current balance: " + balance);
+    balanceLabel.setText("Current balance: " + currreAccount.getBalance());
     inputField.setText("");
   }
 
