@@ -7,12 +7,9 @@ public class CheckingAccount extends Account {
     }
 
     @Override
-    public void withdraw(double amount) {
-        if (balance + overdraftLimit >= amount) {
-            balance -= amount;
-        } else {
-            System.out.println("Insufficient funds, including overdraft limit");
-        }
+    public String withdraw(double amount) {
+        String outpw = "may include overdraft limit";
+        return super.withdraw(amount)+ outpw;
     }
 
     @Override

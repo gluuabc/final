@@ -1,14 +1,20 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Account {
     protected String accountHolder;
     protected double balance;
     protected int accountNumber;
     protected int pin;
+    protected List<Transaction> transactions; // Add a list to store transaction history
+
 
     public Account(int accountNumber, String accountHolder, double balance, int pin) {
         this.accountNumber = accountNumber;
         this.accountHolder = accountHolder;
         this.balance = balance;
         this.pin = pin;
+        this.transactions = new ArrayList<>(); 
     }
 
     public int getAccountNumber() {
@@ -24,24 +30,34 @@ public abstract class Account {
     }
 
     public void deposit(double amount) {
+        Transaction e = new Transaction("deposit", amount);
+            transactions.add(e);
         balance += amount;
     }
 
-    public void withdraw(double amount) {
+    public String withdraw(double amount) {
+        String outp = "Withdrawn: $" + amount;
         if (balance >= amount) {
             balance -= amount;
+            Transaction e = new Transaction("withdraw", amount);
+            transactions.add(e);
         } else {
-            System.out.println("Insufficient funds");
+            outp="Insufficient funds";
         }
+        return outp;
     }
 
-    public void transfer(Account toAccount, double amount) {
+    public String transfer(Account toAccount, double amount) {
+        String outp = "Transferred: $" + amount + " to account: " + toAccount.getAccountNumber();
         if (balance >= amount) {
             balance -= amount;
             toAccount.deposit(amount);
+            Transaction e = new Transaction("transfer " + toAccount.getAccountNumber(), amount);
+            transactions.add(e);
         } else {
-            System.out.println("Insufficient funds");
+            outp="Insufficient funds";
         }
+        return outp;
     }
 
     public abstract void applyInterest();
@@ -52,5 +68,9 @@ public abstract class Account {
 
     public void changePin(int newPin){
         pin = newPin;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 }

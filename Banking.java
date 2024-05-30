@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 public class Banking extends JFrame {
     private Map<Integer, Account> accounts = new HashMap<>();
@@ -112,7 +113,7 @@ public class Banking extends JFrame {
                     int value = mapElement.getValue().getAccountNumber();
                     if (accountNumber == value) {
                         accountExists = true;
-                        outputArea.setText("An account with the same account number already exists. Please choose a different account number.");
+                        outputArea.setText("An account with the same account number already exists. Please use a different account number.");
                         break; 
                     }
                 }
@@ -182,6 +183,7 @@ public class Banking extends JFrame {
         JButton applyInterestButton = new JButton("Apply Interest");
         JButton viewBalanceButton = new JButton("View Balance");
         JButton changePinButton = new JButton("Change Pin");
+        JButton viewTransactionsButton = new JButton("View Transactions");
 
         depositButton.addActionListener(new ActionListener() {
             @Override
@@ -196,8 +198,7 @@ public class Banking extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 double amount = Double.parseDouble(amountField.getText());
-                account.withdraw(amount);
-                outcome.setText("Withdrawn: $" + amount);
+                outcome.setText(account.withdraw(amount));
             }
         });
 
@@ -211,8 +212,7 @@ public class Banking extends JFrame {
                     Account toAccount = accounts.get(destinationAccountNumber);
                     if (toAccount != null && toAccount!= account) {
                         double amount = Double.parseDouble(amountField.getText());
-                        account.transfer(toAccount, amount);
-                        outcome.setText("Transferred: $" + amount + " to account: " + destinationAccountNumber);
+                        outcome.setText(account.transfer(toAccount, amount));
                     } else {
                       outcome.setText("Destination account not found.");
                     }
@@ -257,9 +257,21 @@ public class Banking extends JFrame {
             }
         });
 
+        viewTransactionsButton.addActionListener(new ActionListener() { // Add action listener for the new button
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            List<Transaction> transactions = account.getTransactions();
+            StringBuilder transactionHistory = new StringBuilder("Transaction History:\n");
+            for (Transaction transaction : transactions) {
+                transactionHistory.append(transaction.toString()).append("\n");
+            }
+            outcome.setText(transactionHistory.toString());
+          }
+      });
+
         //put all to the frame
         JFrame actionFrame = new JFrame("Account Actions");
-        actionFrame.setSize(300, 350);
+        actionFrame.setSize(300, 400);
         actionFrame.setLayout(new BoxLayout(actionFrame.getContentPane(), BoxLayout.Y_AXIS));
         actionFrame.add(new JLabel("Select action:"));
         actionFrame.add(depositButton);
@@ -268,9 +280,11 @@ public class Banking extends JFrame {
         actionFrame.add(applyInterestButton);
         actionFrame.add(viewBalanceButton);
         actionFrame.add(changePinButton);
+        actionFrame.add(viewTransactionsButton);
         actionFrame.add(panel);
         actionFrame.setVisible(true);
     }
+
 
     public static void main(String[] args) {
         new Banking();

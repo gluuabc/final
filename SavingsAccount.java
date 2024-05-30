@@ -9,5 +9,7 @@ public class SavingsAccount extends Account {
     @Override
     public void applyInterest() {
         balance += balance * interestRate;
+        Transaction e = new Transaction("interest", balance);
+        transactions.add(e);
     }
 }

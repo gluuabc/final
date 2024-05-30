@@ -9,5 +9,7 @@ public class LoanAccount extends Account {
     @Override
     public void applyInterest() {
         balance += balance * apr;
+        Transaction e = new Transaction("interest", balance);
+        transactions.add(e);
     }
 }
