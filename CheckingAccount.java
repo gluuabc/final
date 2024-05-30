@@ -10,7 +10,7 @@ public class CheckingAccount extends Account {
     public String withdraw(double amount) {
         if (amount>0){
         String outp = "Withdrawn: $" + amount;
-        if (amount >= balance+overdraftLimit) {
+        if (balance - amount >= -overdraftLimit) {
             balance -= amount;
             Transaction e = new Transaction("withdraw", amount);
             transactions.add(e);
@@ -25,7 +25,7 @@ public class CheckingAccount extends Account {
     @Override
     public String transfer(Account toAccount, double amount){
         String outp = "Transferred: $" + amount + " to account: " + toAccount.getAccountNumber();
-        if (amount >= balance+overdraftLimit) {
+        if (balance - amount >= -overdraftLimit) {
             balance -= amount;
             toAccount.deposit(amount);
             Transaction e = new Transaction("transfer to account number" + toAccount.getAccountNumber(), amount);
