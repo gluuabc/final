@@ -8,6 +8,7 @@ public class Banking extends JFrame {
     private Map<Integer, Account> accounts = new HashMap<>();
     private JTextArea outputArea;
 
+    //initial page
     public Banking() {
         setTitle("Bank Account Management System");
         setSize(400, 150);
@@ -37,16 +38,18 @@ public class Banking extends JFrame {
             }
         });
 
+        //Status text prompt
         outputArea = new JTextArea();
         JScrollPane scrollPane = new JScrollPane(outputArea);
-        scrollPane.setBounds(10, 50, 360, 25);
+        scrollPane.setBounds(10, 50, 360, 50);
         add(scrollPane);
         outputArea.setEditable(false);
+        outputArea.setText("welcome to the bank. new user create account first");
 
         setVisible(true);
     }
 
-    //create
+    //create account
     private void createAccount() {
         JTextField accountNumberField = new JTextField();
         JTextField accountHolderField = new JTextField();
@@ -65,7 +68,7 @@ public class Banking extends JFrame {
         panel.add(accountHolderField);
         panel.add(new JLabel("Initial Balance:"));
         panel.add(initialBalanceField);
-        panel.add(new JLabel("PIN:"));
+        panel.add(new JLabel("PIN (number):"));
         panel.add(pinField);
         panel.add(new JLabel("Account Type:"));
         panel.add(accountTypeCombo);
@@ -103,9 +106,22 @@ public class Banking extends JFrame {
                         outputArea.setText("Invalid account type");
                         return;
                 }
-
-                accounts.put(accountNumber, account);
-                outputArea.setText("Account created successfully.");
+                //check if account number is already taken
+                boolean accountExists = false;
+                for (Map.Entry<Integer, Account> mapElement : accounts.entrySet()) {
+                    int value = mapElement.getValue().getAccountNumber();
+                    if (accountNumber == value) {
+                        accountExists = true;
+                        outputArea.setText("An account with the same account number already exists. Please choose a different account number.");
+                        break; 
+                    }
+                }
+                
+                if (!accountExists) {
+                    accounts.put(accountNumber, account);
+                    outputArea.setText("Account created successfully.");
+                }                
+              
             } catch (NumberFormatException ex) {
                 outputArea.setText("Invalid input. Please enter valid numbers.");
             }
@@ -155,7 +171,7 @@ public class Banking extends JFrame {
         //JPanel for text input
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new JLabel("Amount:"));
+        panel.add(new JLabel("Amount of money deposit/withdraw/transfer:"));
         panel.add(amountField);
         panel.add(new JLabel("outcome:"));
         panel.add(outcome1);
@@ -165,6 +181,7 @@ public class Banking extends JFrame {
         JButton transferButton = new JButton("Transfer");
         JButton applyInterestButton = new JButton("Apply Interest");
         JButton viewBalanceButton = new JButton("View Balance");
+        JButton changePinButton = new JButton("Change Pin");
 
         depositButton.addActionListener(new ActionListener() {
             @Override
@@ -184,6 +201,7 @@ public class Banking extends JFrame {
             }
         });
 
+        //transfer in a JOptionPane
         transferButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -204,6 +222,26 @@ public class Banking extends JFrame {
             }
         });
 
+        //change pin in a JOptionPane
+        changePinButton.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              String newPinStr = JOptionPane.showInputDialog("Enter your new pin:");
+              try {
+                int newPin = Integer.parseInt(newPinStr); 
+                  
+                  if (newPin!= account.pin) {
+                    account.changePin(newPin);
+                      outcome.setText("you change your pin successfully!" );
+                  } else {
+                    outcome.setText("you did not make change");
+                  }
+              } catch (NumberFormatException ex) {
+                outcome.setText("no change can be made");
+              }
+          }
+      });
+
         applyInterestButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -219,8 +257,9 @@ public class Banking extends JFrame {
             }
         });
 
+        //put all to the frame
         JFrame actionFrame = new JFrame("Account Actions");
-        actionFrame.setSize(300, 300);
+        actionFrame.setSize(300, 350);
         actionFrame.setLayout(new BoxLayout(actionFrame.getContentPane(), BoxLayout.Y_AXIS));
         actionFrame.add(new JLabel("Select action:"));
         actionFrame.add(depositButton);
@@ -228,6 +267,7 @@ public class Banking extends JFrame {
         actionFrame.add(transferButton);
         actionFrame.add(applyInterestButton);
         actionFrame.add(viewBalanceButton);
+        actionFrame.add(changePinButton);
         actionFrame.add(panel);
         actionFrame.setVisible(true);
     }

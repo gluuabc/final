@@ -1,7 +1,7 @@
 public abstract class Account {
-    protected int accountNumber;
     protected String accountHolder;
     protected double balance;
+    protected int accountNumber;
     protected int pin;
 
     public Account(int accountNumber, String accountHolder, double balance, int pin) {
@@ -48,5 +48,9 @@ public abstract class Account {
 
     public boolean verifyPin(int pin) {
         return this.pin == pin;
+    }
+
+    public void changePin(int newPin){
+        pin = newPin;
     }
 }
