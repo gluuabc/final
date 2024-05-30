@@ -19,4 +19,5 @@ public class Transaction {
     public String toString() {
         return name + ": $" + amount;
     }
+
 }

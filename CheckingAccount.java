@@ -8,8 +8,32 @@ public class CheckingAccount extends Account {
 
     @Override
     public String withdraw(double amount) {
-        String outpw = "may include overdraft limit";
-        return super.withdraw(amount)+ outpw;
+        if (amount>0){
+        String outp = "Withdrawn: $" + amount;
+        if (amount >= balance+overdraftLimit) {
+            balance -= amount;
+            Transaction e = new Transaction("withdraw", amount);
+            transactions.add(e);
+        } else {
+            outp="Insufficient funds including overdraft limit";
+        }
+        return outp;
+    }
+    return "not valid number";
+    }
+
+    @Override
+    public String transfer(Account toAccount, double amount){
+        String outp = "Transferred: $" + amount + " to account: " + toAccount.getAccountNumber();
+        if (amount >= balance+overdraftLimit) {
+            balance -= amount;
+            toAccount.deposit(amount);
+            Transaction e = new Transaction("transfer to account number" + toAccount.getAccountNumber(), amount);
+            transactions.add(e);
+        } else {
+            outp="Insufficient funds";
+        }
+        return outp;
     }
 
     @Override
