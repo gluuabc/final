@@ -1,14 +1,13 @@
 public class LoanAccount extends Account {
     private double apr;
 
-    public LoanAccount(String accountNumber, String accountHolder, double initialBalance, double apr) {
-        super(accountNumber, accountHolder, initialBalance);
+    public LoanAccount(int accountNumber, String accountHolder, double balance, double apr, int pin) {
+        super(accountNumber, accountHolder, balance, pin);
         this.apr = apr;
     }
 
     @Override
     public void applyInterest() {
-        double interest = balance * (apr / 100);
-        balance += interest;
+        balance += balance * apr;
     }
 }
