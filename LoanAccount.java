@@ -1,3 +1,5 @@
+//the balance is amount of money you loan, so deposit will decrease the number
+//you cannot withdraw and transfer in this account
 public class LoanAccount extends Account {
     private double apr;
 

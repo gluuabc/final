@@ -16,6 +16,7 @@ public class Banking extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 
+        //create and add bottom  
         JButton createAccountButton = new JButton("Create Account");
         createAccountButton.setBounds(10, 10, 150, 25);
         add(createAccountButton);
@@ -24,7 +25,7 @@ public class Banking extends JFrame {
         loginButton.setBounds(200, 10, 150, 25);
         add(loginButton);
 
-        //botton function login/create account
+        //botton action login/create account
         createAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -50,8 +51,9 @@ public class Banking extends JFrame {
         setVisible(true);
     }
 
-    //create account
+    //create account page
     private void createAccount() {
+      //field and combo for enter user input
         JTextField accountNumberField = new JTextField();
         JTextField accountHolderField = new JTextField();
         JTextField initialBalanceField = new JTextField();
@@ -61,6 +63,7 @@ public class Banking extends JFrame {
         JTextField overdraftField = new JTextField();
         JTextField aprField = new JTextField();
 
+        //create panel and add lable and bottom
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel("Account Number:"));
@@ -80,6 +83,7 @@ public class Banking extends JFrame {
         panel.add(new JLabel("APR (Loan):"));
         panel.add(aprField);
 
+        //create account action
         int result = JOptionPane.showConfirmDialog(null, panel, "Create Account", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             try {
@@ -129,7 +133,7 @@ public class Banking extends JFrame {
         }
     }
 
-    //login 
+    //login page
     private void login() {
         JTextField accountNumberField = new JTextField();
         JPasswordField pinField = new JPasswordField(); // Use JPasswordField for PIN
@@ -160,7 +164,7 @@ public class Banking extends JFrame {
         }
     }
 
-    //account function
+    //account page (after login)
     private void showAccountActions(Account account) {
         JTextField amountField = new JTextField();
         amountField.setSize(100,100);
@@ -185,6 +189,7 @@ public class Banking extends JFrame {
         JButton changePinButton = new JButton("Change Pin");
         JButton viewTransactionsButton = new JButton("View Transactions");
 
+        //bottom action
         depositButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

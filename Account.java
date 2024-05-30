@@ -29,12 +29,14 @@ public abstract class Account {
         return balance;
     }
 
+    //deposit
     public void deposit(double amount) {
         Transaction e = new Transaction("deposit", amount);
             transactions.add(e);
         balance += amount;
     }
 
+    //withdraw (include insufficient statement)
     public String withdraw(double amount) {
         String outp = "Withdrawn: $" + amount;
         if (balance >= amount) {
@@ -47,6 +49,7 @@ public abstract class Account {
         return outp;
     }
 
+    //transfer (include insufficient statement)
     public String transfer(Account toAccount, double amount) {
         String outp = "Transferred: $" + amount + " to account: " + toAccount.getAccountNumber();
         if (balance >= amount) {
@@ -60,16 +63,19 @@ public abstract class Account {
         return outp;
     }
 
+    //apply interest (checking account does not have the function)
     public abstract void applyInterest();
 
     public boolean verifyPin(int pin) {
         return this.pin == pin;
     }
 
+    //change pin
     public void changePin(int newPin){
         pin = newPin;
     }
 
+    //transaction list
     public List<Transaction> getTransactions() {
         return transactions;
     }

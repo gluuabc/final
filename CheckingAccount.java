@@ -1,3 +1,6 @@
+//checking account can use money more than it has in balance
+//maxium money can use: balance+overdrift
+//this account do not have interest
 public class CheckingAccount extends Account {
     private double overdraftLimit;
 

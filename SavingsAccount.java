@@ -1,3 +1,4 @@
+//simple account with interest
 public class SavingsAccount extends Account {
     private double interestRate;
 

@@ -15,6 +15,7 @@ public class Transaction {
         return amount;
     }
 
+    //rewrite tostring for output
     @Override
     public String toString() {
         return name + ": $" + amount;
