@@ -8,8 +8,9 @@ public class LoanAccount extends Account {
 
     @Override
     public void applyInterest() {
+        double origin=balance;
         balance += balance * apr;
-        Transaction e = new Transaction("interest", balance);
+        Transaction e = new Transaction("interest", balance-origin);
         transactions.add(e);
     }
 }

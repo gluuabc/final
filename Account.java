@@ -52,7 +52,7 @@ public abstract class Account {
         if (balance >= amount) {
             balance -= amount;
             toAccount.deposit(amount);
-            Transaction e = new Transaction("transfer " + toAccount.getAccountNumber(), amount);
+            Transaction e = new Transaction("transfer to account number" + toAccount.getAccountNumber(), amount);
             transactions.add(e);
         } else {
             outp="Insufficient funds";

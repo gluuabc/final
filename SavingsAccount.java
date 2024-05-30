@@ -8,8 +8,9 @@ public class SavingsAccount extends Account {
 
     @Override
     public void applyInterest() {
+        double origin=balance;
         balance += balance * interestRate;
-        Transaction e = new Transaction("interest", balance);
+        Transaction e = new Transaction("interest", balance-origin);
         transactions.add(e);
     }
 }

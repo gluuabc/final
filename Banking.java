@@ -246,7 +246,7 @@ public class Banking extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 account.applyInterest();
-                outcome.setText("Interest applied. New balance: $" + account.getBalance());
+                outcome.setText("Interest applied (checking account no change). New balance: $" + account.getBalance());
             }
         });
 
